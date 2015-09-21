@@ -25,9 +25,10 @@
 #else
  #include "WProgram.h"
 #endif
-*/
 
 #include <Wire.h>
+*/
+
 #include "Adafruit_ADS1015.h"
 
 /**************************************************************************/
