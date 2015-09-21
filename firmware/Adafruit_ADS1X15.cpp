@@ -29,7 +29,7 @@
 #include <Wire.h>
 */
 
-#include "Adafruit_ADS1015.h"
+#include "Adafruit_ADS1X15.h"
 
 /**************************************************************************/
 /*!
@@ -37,11 +37,15 @@
 */
 /**************************************************************************/
 static uint8_t i2cread(void) {
+  /*
   #if ARDUINO >= 100
   return Wire.read();
   #else
   return Wire.receive();
   #endif
+  */
+  
+  return Wire.read();
 }
 
 /**************************************************************************/
@@ -50,11 +54,15 @@ static uint8_t i2cread(void) {
 */
 /**************************************************************************/
 static void i2cwrite(uint8_t x) {
+  /*
   #if ARDUINO >= 100
   Wire.write((uint8_t)x);
   #else
   Wire.send(x);
   #endif
+  */
+  
+  Wire.write((uint8_t)x);
 }
 
 /**************************************************************************/
