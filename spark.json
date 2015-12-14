@@ -2,6 +2,6 @@
   "name": "Adafruit_ADS1X15",
   "author": "Koos du Preez <kdupreez@hotmail.com>",
   "license": "BSD",
-  "version": "0.1.1",
-  "description": "Particle Library for ADS1x15 series of Analog to Digital converter breakout boards"
+  "version": "0.1.2",
+  "description": "Library for ADS1x15 series of 12-bit and 16-bit Analog to Digital converter breakout boards"
 }
