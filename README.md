@@ -1,7 +1,7 @@
-Adafruit_ADS1015
+Adafruit_ADS1x15
 ================
 
-Driver for TI's ADS1015: 12-bit Differential or Single-Ended ADC with PGA and Comparator
+Library for ADS1x15 series of 12-bit and 16-bit Analog to Digital converter breakout boards
 
 <!-- START COMPATIBILITY TABLE -->
 
@@ -19,6 +19,7 @@ ATSAM3X8E         |      X       |             |            | Use SDA/SCL on pin
 ATSAM21D          |      X       |             |            | 
 ATtiny85 @ 16MHz  |             |             |     X       | 
 ATtiny85 @ 8MHz   |             |             |     X       | 
+Particle Photon  |       X      |             |             | Use SDA/SCL on pins D1 and D0, ALERT on D2 for samples.
 
   * ATmega328 @ 16MHz : Arduino UNO, Adafruit Pro Trinket 5V, Adafruit Metro 328, Adafruit Metro Mini
   * ATmega328 @ 12MHz : Adafruit Pro Trinket 3V
@@ -30,5 +31,6 @@ ATtiny85 @ 8MHz   |             |             |     X       |
   * ATSAM21D : Arduino Zero, M0 Pro
   * ATtiny85 @ 16MHz : Adafruit Trinket 5V
   * ATtiny85 @ 8MHz : Adafruit Gemma, Arduino Gemma, Adafruit Trinket 3V
+  * Particle Photon : Particle Photon 3.3V (https://docs.particle.io/datasheets/kits/photon)
 
 <!-- END COMPATIBILITY TABLE -->
