@@ -5,7 +5,7 @@
     @license  BSD (see license.txt)
 
     This is a library for the Adafruit ADS1015 breakout board
-    ----> https://www.adafruit.com/products/???
+    ----> https://www.adafruit.com/products/1085
 
     Adafruit invests time and resources providing this open source code,
     please support Adafruit and open-source hardware by purchasing
@@ -15,6 +15,7 @@
 
     v1.0  - First release
     v1.1  - Added ADS1115 support - W. Earl
+    v1.2  - Added Photon support and photon samples
 */
 /**************************************************************************/
 
