@@ -41,7 +41,7 @@
     CONVERSION DELAY (in mS)
     -----------------------------------------------------------------------*/
     #define ADS1015_CONVERSIONDELAY         (1)
-    #define ADS1115_CONVERSIONDELAY         (8)
+    #define ADS1115_CONVERSIONDELAY         (1)
 /*=========================================================================*/
 
 /*=========================================================================
@@ -89,7 +89,7 @@
     #define ADS1015_REG_CONFIG_DR_250SPS    (0x0020)  // 250 samples per second
     #define ADS1015_REG_CONFIG_DR_490SPS    (0x0040)  // 490 samples per second
     #define ADS1015_REG_CONFIG_DR_920SPS    (0x0060)  // 920 samples per second
-    #define ADS1015_REG_CONFIG_DR_1600SPS   (0x0080)  // 1600 samples per second (default)
+    #define ADS1015_REG_CONFIG_DR_1600SPS   (0x00E0)  // 1600 samples per second (default)
     #define ADS1015_REG_CONFIG_DR_2400SPS   (0x00A0)  // 2400 samples per second
     #define ADS1015_REG_CONFIG_DR_3300SPS   (0x00C0)  // 3300 samples per second
 
