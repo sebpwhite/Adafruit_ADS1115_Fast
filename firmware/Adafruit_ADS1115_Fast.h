@@ -130,6 +130,19 @@ typedef enum
   GAIN_SIXTEEN      = ADS1015_REG_CONFIG_PGA_0_256V
 } adsGain_t;
 
+typedef enum
+{
+  SPS_4             = ADS1115_REG_CONFIG_DR_4SPS,
+  SPS_8             = ADS1115_REG_CONFIG_DR_8SPS,
+  SPS_16            = ADS1115_REG_CONFIG_DR_16SPS,
+  SPS_32            = ADS1115_REG_CONFIG_DR_32SPS,
+  SPS_64            = ADS1115_REG_CONFIG_DR_64SPS,
+  SPS_128           = ADS1115_REG_CONFIG_DR_128SPS,
+  SPS_250           = ADS1115_REG_CONFIG_DR_250SPS,
+  SPS_475           = ADS1115_REG_CONFIG_DR_475SPS,
+  SPS_860           = ADS1115_REG_CONFIG_DR_860SPS
+} adsSampleRate_t;
+
 class Adafruit_ADS1015
 {
 protected:
