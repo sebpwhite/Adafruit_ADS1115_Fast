@@ -161,6 +161,7 @@ protected:
   int16_t   getLastConversionResults();
   void      setGain(adsGain_t gain);
   void      startSampling_SingleEnded(uint8_t channel, adsSampleRate_t samplerate);
+  int16_t   getADCReading();
   adsGain_t getGain(void);
 
  private:
