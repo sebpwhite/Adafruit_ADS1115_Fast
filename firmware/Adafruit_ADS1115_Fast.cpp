@@ -380,3 +380,51 @@ int16_t Adafruit_ADS1015::getLastConversionResults()
   }
 }
 
+/**************************************************************************/
+/*!
+    @brief  Sets up continuous sampling, with the ALERT/RDY pin pulsing
+    (from high to low) when each new sample arrives.
+
+*/
+/**************************************************************************/
+void Adafruit_ADS1015::startSampling_SingleEnded(uint8_t channel, adsSampleRate_t samplerate)
+{
+  // Start with default values
+  uint16_t config = ADS1015_REG_CONFIG_CQUE_1CONV   | // No effect when using RDY pin
+                    ADS1015_REG_CONFIG_CLAT_LATCH   | // No effect when using RDY pin
+                    ADS1015_REG_CONFIG_CPOL_ACTVLOW | // Alert/Rdy active low   (default val)
+                    ADS1015_REG_CONFIG_CMODE_TRAD   | // Traditional comparator (default val)
+                    samplerate                      | // Get Sampling Rate as input
+                    ADS1015_REG_CONFIG_MODE_CONTIN  | // Continuous conversion mode
+                    ADS1015_REG_CONFIG_MODE_CONTIN;   // Continuous conversion mode
+
+  // Set PGA/voltage range
+  config |= m_gain;
+                    
+  // Set single-ended input channel
+  switch (channel)
+  {
+    case (0):
+      config |= ADS1015_REG_CONFIG_MUX_SINGLE_0;
+      break;
+    case (1):
+      config |= ADS1015_REG_CONFIG_MUX_SINGLE_1;
+      break;
+    case (2):
+      config |= ADS1015_REG_CONFIG_MUX_SINGLE_2;
+      break;
+    case (3):
+      config |= ADS1015_REG_CONFIG_MUX_SINGLE_3;
+      break;
+  }
+
+  // Set the high threshold register
+  writeRegister(m_i2cAddress, ADS1015_REG_POINTER_HITHRESH, ADS1115_REG_HITHRES);
+  
+  // Set the low threshold register
+  writeRegister(m_i2cAddress, ADS1015_REG_POINTER_LOWTHRESH, ADS1115_REG_LOWTHRES);
+
+  // Write config register to the ADC
+  writeRegister(m_i2cAddress, ADS1015_REG_POINTER_CONFIG, config);
+}
+
