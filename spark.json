@@ -2,6 +2,6 @@
   "name": "Adafruit_ADS1115_Fast",
   "author": "Sebastian White",
   "license": "BSD",
-  "version": "0.1.3",
-  "description": "Library for ADS1x15 series of 12-bit and 16-bit Analog to Digital converter breakout boards. Based on Koos du Preez work with some very minor changes to try and decrease conversion time on the ADS1115"
+  "version": "0.1.4",
+  "description": "Library for ADS1115 16-bit Analog to Digital converter breakout board with a focus on sampling speed. Based on Koos du Preez and Adafruit's work."
 }
