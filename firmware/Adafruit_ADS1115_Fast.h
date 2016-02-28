@@ -161,7 +161,7 @@ protected:
   void      startComparator_SingleEnded(uint8_t channel, int16_t threshold);
   int16_t   getLastConversionResults();
   void      setGain(adsGain_t gain);
-  void      startComparator_SingleEnded(uint8_t channel, adsSampleRate_t samplerate);
+  void      startSampling_SingleEnded(uint8_t channel, adsSampleRate_t samplerate);
   adsGain_t getGain(void);
 
  private:
