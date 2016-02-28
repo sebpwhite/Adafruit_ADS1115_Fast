@@ -428,3 +428,16 @@ void Adafruit_ADS1015::startSampling_SingleEnded(uint8_t channel, adsSampleRate_
   writeRegister(m_i2cAddress, ADS1015_REG_POINTER_CONFIG, config);
 }
 
+/**************************************************************************/
+/*!
+    @brief  This function reads the last conversion
+            results without changing the config value.
+*/
+/**************************************************************************/
+int16_t Adafruit_ADS1015::getADCReading()
+{
+  // Read the conversion results
+  uint16_t res = readRegister(m_i2cAddress, ADS1015_REG_POINTER_CONVERT);
+  return (int16_t)res;
+}
+
