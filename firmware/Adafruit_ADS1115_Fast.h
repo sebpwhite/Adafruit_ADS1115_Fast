@@ -117,7 +117,7 @@
     CONSTANTS FOR THRESHOLD REGISTERS WHEN USING RDY PIN)
     -----------------------------------------------------------------------*/
     #define ADS1115_REG_LOWTHRES         (0x0000)
-    #define ADS1115_RED_HITHRESH         (0x8000)
+    #define ADS1115_REG_HITHRESH         (0x8000)
 /*=========================================================================*/
 
 typedef enum
