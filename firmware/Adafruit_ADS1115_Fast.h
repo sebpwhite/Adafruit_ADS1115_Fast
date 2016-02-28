@@ -132,7 +132,6 @@ typedef enum
 
 typedef enum
 {
-  SPS_4             = ADS1115_REG_CONFIG_DR_4SPS,
   SPS_8             = ADS1115_REG_CONFIG_DR_8SPS,
   SPS_16            = ADS1115_REG_CONFIG_DR_16SPS,
   SPS_32            = ADS1115_REG_CONFIG_DR_32SPS,
