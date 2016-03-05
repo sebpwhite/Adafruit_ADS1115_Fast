@@ -1,33 +1,20 @@
 /**************************************************************************/
 /*!
-    @file     Adafruit_ADS1015.cpp
+    @file     Adafruit_ADS1115_Fast.cpp
     @author   K.Townsend (Adafruit Industries)
     @license  BSD (see license.txt)
 
-    Driver for the ADS1015/ADS1115 ADC
+    Driver for the ADS1115 ADC
 
     This is a library for the Adafruit MPL115A2 breakout
     ----> https://www.adafruit.com/products/???
 
-    Adafruit invests time and resources providing this open source code,
-    please support Adafruit and open-source hardware by purchasing
-    products from Adafruit!
-
     @section  HISTORY
 
     v1.0 - First release
+    v2.0 - Significant rewrite relying on interupts to enable much higher speed continuous sampling and much more timing accuracy. By Sebastian White
 */
 /**************************************************************************/
-
-/*
-#if ARDUINO >= 100
- #include "Arduino.h"
-#else
- #include "WProgram.h"
-#endif
-
-#include <Wire.h>
-*/
 
 #include "Adafruit_ADS1115_Fast.h"
 
@@ -37,31 +24,9 @@
 */
 /**************************************************************************/
 static uint8_t i2cread(void) {
-  /*
-  #if ARDUINO >= 100
-  return Wire.read();
-  #else
-  return Wire.receive();
-  #endif
-  */
-  
   return Wire.read();
 }
-
-/**************************************************************************/
-/*!
-    @brief  Abstract away platform differences in Arduino wire library
-*/
-/**************************************************************************/
 static void i2cwrite(uint8_t x) {
-  /*
-  #if ARDUINO >= 100
-  Wire.write((uint8_t)x);
-  #else
-  Wire.send(x);
-  #endif
-  */
-  
   Wire.write((uint8_t)x);
 }
 
@@ -233,21 +198,9 @@ int16_t Adafruit_ADS1015::readADC_Differential_0_1() {
 
   // Read the conversion results
   uint16_t res = readRegister(m_i2cAddress, ADS1015_REG_POINTER_CONVERT) >> m_bitShift;
-  if (m_bitShift == 0)
-  {
-    return (int16_t)res;
-  }
-  else
-  {
-    // Shift 12-bit results right 4 bits for the ADS1015,
-    // making sure we keep the sign bit intact
-    if (res > 0x07FF)
-    {
-      // negative number - extend the sign to 16th bit
-      res |= 0xF000;
-    }
-    return (int16_t)res;
-  }
+   
+  return (int16_t)res;
+
 }
 
 /**************************************************************************/
@@ -284,21 +237,9 @@ int16_t Adafruit_ADS1015::readADC_Differential_2_3() {
 
   // Read the conversion results
   uint16_t res = readRegister(m_i2cAddress, ADS1015_REG_POINTER_CONVERT) >> m_bitShift;
-  if (m_bitShift == 0)
-  {
-    return (int16_t)res;
-  }
-  else
-  {
-    // Shift 12-bit results right 4 bits for the ADS1015,
-    // making sure we keep the sign bit intact
-    if (res > 0x07FF)
-    {
-      // negative number - extend the sign to 16th bit
-      res |= 0xF000;
-    }
-    return (int16_t)res;
-  }
+
+  return (int16_t)res;
+  
 }
 
 /**************************************************************************/
@@ -343,42 +284,12 @@ void Adafruit_ADS1015::startComparator_SingleEnded(uint8_t channel, int16_t thre
 
   // Set the high threshold register
   // Shift 12-bit results left 4 bits for the ADS1015
-  writeRegister(m_i2cAddress, ADS1015_REG_POINTER_HITHRESH, threshold << m_bitShift);
+  writeRegister(m_i2cAddress, ADS1015_REG_POINTER_HITHRESH, threshold);
 
   // Write config register to the ADC
   writeRegister(m_i2cAddress, ADS1015_REG_POINTER_CONFIG, config);
 }
 
-/**************************************************************************/
-/*!
-    @brief  In order to clear the comparator, we need to read the
-            conversion results.  This function reads the last conversion
-            results without changing the config value.
-*/
-/**************************************************************************/
-int16_t Adafruit_ADS1015::getLastConversionResults()
-{
-  // Wait for the conversion to complete
-  delay(m_conversionDelay);
-
-  // Read the conversion results
-  uint16_t res = readRegister(m_i2cAddress, ADS1015_REG_POINTER_CONVERT) >> m_bitShift;
-  if (m_bitShift == 0)
-  {
-    return (int16_t)res;
-  }
-  else
-  {
-    // Shift 12-bit results right 4 bits for the ADS1015,
-    // making sure we keep the sign bit intact
-    if (res > 0x07FF)
-    {
-      // negative number - extend the sign to 16th bit
-      res |= 0xF000;
-    }
-    return (int16_t)res;
-  }
-}
 
 /**************************************************************************/
 /*!
