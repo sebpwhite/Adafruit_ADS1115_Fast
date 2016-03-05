@@ -19,16 +19,6 @@
 */
 /**************************************************************************/
 
-/*
-#if ARDUINO >= 100
- #include "Arduino.h"
-#else
- #include "WProgram.h"
-#endif
-
-#include <Wire.h>
-*/
-
 #include "application.h"
 
 /*=========================================================================
@@ -158,7 +148,6 @@ protected:
   int16_t   readADC_Differential_0_1(void);
   int16_t   readADC_Differential_2_3(void);
   void      startComparator_SingleEnded(uint8_t channel, int16_t threshold);
-  int16_t   getLastConversionResults();
   void      setGain(adsGain_t gain);
   void      startSampling_SingleEnded(uint8_t channel, adsSampleRate_t samplerate);
   int16_t   getADCReading();
