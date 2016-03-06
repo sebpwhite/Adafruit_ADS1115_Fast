@@ -20,26 +20,14 @@
 
 /**************************************************************************/
 /*!
-    @brief  Abstract away platform differences in Arduino wire library
-*/
-/**************************************************************************/
-static uint8_t i2cread(void) {
-  return Wire.read();
-}
-static void i2cwrite(uint8_t x) {
-  Wire.write((uint8_t)x);
-}
-
-/**************************************************************************/
-/*!
     @brief  Writes 16-bits to the specified destination register
 */
 /**************************************************************************/
 static void writeRegister(uint8_t i2cAddress, uint8_t reg, uint16_t value) {
   Wire.beginTransmission(i2cAddress);
-  i2cwrite((uint8_t)reg);
-  i2cwrite((uint8_t)(value>>8));
-  i2cwrite((uint8_t)(value & 0xFF));
+  Wire.write((uint8_t)reg);
+  Wire.write((uint8_t)(value>>8));
+  Wire.write((uint8_t)(value & 0xFF));
   Wire.endTransmission();
 }
 
@@ -50,10 +38,10 @@ static void writeRegister(uint8_t i2cAddress, uint8_t reg, uint16_t value) {
 /**************************************************************************/
 static uint16_t readRegister(uint8_t i2cAddress, uint8_t reg) {
   Wire.beginTransmission(i2cAddress);
-  i2cwrite(ADS1015_REG_POINTER_CONVERT);
+  Wire.write(ADS1015_REG_POINTER_CONVERT);
   Wire.endTransmission();
   Wire.requestFrom(i2cAddress, (uint8_t)2);
-  return ((i2cread() << 8) | i2cread());  
+  return ((Wire.read() << 8) | Wire.read());  
 }
 
 /**************************************************************************/
@@ -244,55 +232,6 @@ int16_t Adafruit_ADS1015::readADC_Differential_2_3() {
 
 /**************************************************************************/
 /*!
-    @brief  Sets up the comparator to operate in basic mode, causing the
-            ALERT/RDY pin to assert (go from high to low) when the ADC
-            value exceeds the specified threshold.
-
-            This will also set the ADC in continuous conversion mode.
-*/
-/**************************************************************************/
-void Adafruit_ADS1015::startComparator_SingleEnded(uint8_t channel, int16_t threshold)
-{
-  // Start with default values
-  uint16_t config = ADS1015_REG_CONFIG_CQUE_1CONV   | // Comparator enabled and asserts on 1 match
-                    ADS1015_REG_CONFIG_CLAT_LATCH   | // Latching mode
-                    ADS1015_REG_CONFIG_CPOL_ACTVLOW | // Alert/Rdy active low   (default val)
-                    ADS1015_REG_CONFIG_CMODE_TRAD   | // Traditional comparator (default val)
-                    ADS1115_REG_CONFIG_DR_128SPS    | // 128 samples per second (default)
-                    ADS1015_REG_CONFIG_MODE_CONTIN  | // Continuous conversion mode
-                    ADS1015_REG_CONFIG_MODE_CONTIN;   // Continuous conversion mode
-
-  // Set PGA/voltage range
-  config |= m_gain;
-                    
-  // Set single-ended input channel
-  switch (channel)
-  {
-    case (0):
-      config |= ADS1015_REG_CONFIG_MUX_SINGLE_0;
-      break;
-    case (1):
-      config |= ADS1015_REG_CONFIG_MUX_SINGLE_1;
-      break;
-    case (2):
-      config |= ADS1015_REG_CONFIG_MUX_SINGLE_2;
-      break;
-    case (3):
-      config |= ADS1015_REG_CONFIG_MUX_SINGLE_3;
-      break;
-  }
-
-  // Set the high threshold register
-  // Shift 12-bit results left 4 bits for the ADS1015
-  writeRegister(m_i2cAddress, ADS1015_REG_POINTER_HITHRESH, threshold);
-
-  // Write config register to the ADC
-  writeRegister(m_i2cAddress, ADS1015_REG_POINTER_CONFIG, config);
-}
-
-
-/**************************************************************************/
-/*!
     @brief  Sets up continuous sampling, with the ALERT/RDY pin pulsing
     (from high to low) when each new sample arrives.
 
@@ -337,6 +276,18 @@ void Adafruit_ADS1015::startSampling_SingleEnded(uint8_t channel, adsSampleRate_
 
   // Write config register to the ADC
   writeRegister(m_i2cAddress, ADS1015_REG_POINTER_CONFIG, config);
+}
+
+/**************************************************************************/
+/*!
+    @brief  Sets the chip back to a single shot mode to disable continuous sampling
+    and hopefully ssave power.
+
+*/
+/**************************************************************************/
+void Adafruit_ADS1015::stopSampling_SingleEnded(void)
+{
+  //WRITE FUNCTION
 }
 
 /**************************************************************************/
